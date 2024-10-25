@@ -10,12 +10,16 @@ ClientGuardian - проект разработанный специально д
 
 # Как пользоваться?
 - ## Установка зависимостей
-    1. [Установите poetry](./.docs/POETRY_INSTALL.md)
-    2. Войдите в виртуальное окружение: `poetry shell`
-    3. Установите зависимости: `poetry install`
+    1. [Установите pyenv](https://github.com/pyenv-win/pyenv-win/blob/master/docs/installation.md) 
+    2. Установите python 3.10 `pyenv install 3.10`
+    3. Сделайте эту версию глобальной `pyenv global 3.10`
+    4. [Установите poetry](https://github.com/python-poetry/install.python-poetry.org/blob/main/README.md) 
+    5. Войдите в виртуальное окружение: `poetry shell`
+    6. Установите зависимости: `poetry install`
 
 - ## Запуск
-    `python src/app.py`
+    - Если вы еще не вошли в виртуальное окружение, - сделайте это `poetry shell`
+    - Запустите главный модуль - `python src/app.py`
 
 
 # Вклад в развитие
