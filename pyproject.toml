@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "rzd-hackaton"
+version = "0.1.0"
+description = ""
+authors = ["DIMFLIX-OFFICIAL <dimflix.official@gmail.com>"]
+readme = "README.md"
+packages = [
+    { include = "ChurnGuard", from = "src" }
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
