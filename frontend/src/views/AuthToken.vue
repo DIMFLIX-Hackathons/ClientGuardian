@@ -14,7 +14,7 @@ async function process_auth() {
 
 <template>
     <div class="container">
-       <div class="form">
+       <div class="form" >
          <div class="auth_token_inputs">
            <input type="text" placeholder="Введите токен" v-model="token"/>
          </div>

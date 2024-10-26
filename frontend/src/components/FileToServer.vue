@@ -32,6 +32,7 @@ const props = defineProps({
    display: flex;
    align-items: center;
    justify-content: space-between;
+   min-height: 50px;
 
    .file_info {
       display: flex;

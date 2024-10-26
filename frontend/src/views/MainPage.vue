@@ -2,17 +2,20 @@
 import DropFile from "../components/DropFile.vue";
 import FileToServer from "../components/FileToServer.vue"
 import Task from "../components/Task.vue"
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useFileStore } from '@/store/files';
-import { createTask } from '@/modules/api'
+import { createTask, getTasks } from '@/modules/api'
 
 const fileStore = useFileStore();
+const tasks_object = ref([])
+const tasks = ref([])
 
-const tasks = ref([
-  { status: 'completed', filename: 'File1.csv', data: '2024-01-01' },
-  { status: 'error', filename: 'File2.csv', data: '' },
-  { status: 'expectation', filename: 'File3.csv', data: '' },
-]);
+onMounted(async()=>{
+    tasks_object.value = await getTasks()
+    // console.log(tasks_object.value["data"]["tasks"][0])
+    tasks.value = tasks_object.value["data"]["tasks"]
+    
+})
 
 function removeTask(index){
     tasks.value.splice(index,1);
@@ -31,7 +34,7 @@ function createTaskProcess() {
             <div class="drop_file">
                 <DropFile/>
             </div>
-            <div class="files_to_server">
+            <div class="files_to_server" :class="{invisible:fileStore.files.length<1}">
                 <FileToServer :file="file.file" :file_id="file.id" v-for="file in fileStore.files" class="file"/>
             </div>
             <div class="create_task" @click="createTaskProcess">
@@ -46,9 +49,10 @@ function createTaskProcess() {
                 <Task 
                     v-for="(task, index) in tasks" 
                     :key="index" 
+                    :task_id="task.id"
                     :status="task.status" 
-                    :filename="task.filename"
-                    :data="task.data" 
+                    :filename="task.original_filename"
+                    :data="task.created_at" 
                     @remove="removeTask(index)"
                 />
             </div>
@@ -57,6 +61,12 @@ function createTaskProcess() {
 </template>
 
 <style scoped lang="scss">
+.invisible{
+    display:none !important;
+}
+::-webkit-scrollbar {
+    display: none;
+}
 .container {
     display: flex;
     background-color: rgb(30, 30, 46);
@@ -77,28 +87,30 @@ function createTaskProcess() {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    
     gap: 20px;
+    
 
     .drop_file {
         width: 100%;
-        height: 50%;
+        height: 100%;
     }
+    
 
     .files_to_server {
         width: 100%;
-        max-height: 40%;
+        max-height: 25%;
         background-color: #353550;
         border-radius: 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        height: 30%;
+        
         overflow-y: auto;
         gap: 10px;
         padding: 10px;
         box-sizing: border-box;
-
+        
         .file {
             height: 50px;
         }

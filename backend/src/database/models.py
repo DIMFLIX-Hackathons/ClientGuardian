@@ -59,3 +59,17 @@ class Task(Base):
     created_at = Column(TIMESTAMP, nullable=False, default=datetime.now)
 
     token = relationship("Token", backref="tasks")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "token_id": self.token_id,
+            "original_filename": self.original_filename,
+            "status": self.status,
+            "created_at": self.created_at  
+        }
+
+    
+
+
+   

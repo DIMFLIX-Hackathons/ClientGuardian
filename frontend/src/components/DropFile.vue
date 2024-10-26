@@ -9,7 +9,7 @@ const files = ref([]);
 const { getRootProps, getInputProps, isDragActive } = useDropzone({
 	onDrop: (acceptedFiles) => {
 		console.log('Accepted files:', acceptedFiles);
-		const validExtensions = ['xlsx', 'docx', 'pdf'];
+		const validExtensions = ['xlsx', 'docx', 'pdf', "csv"];
 
 		acceptedFiles.forEach(file => {
 			const extension = file.name.split('.').pop();
