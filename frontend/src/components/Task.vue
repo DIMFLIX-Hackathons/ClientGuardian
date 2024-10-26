@@ -4,8 +4,10 @@ import bad_status_svg from "../assets/svg/bad_status_svg.vue"
 import wait_status_svg from "../assets/svg/wait_status_svg.vue"
 
 
-import read_svg from "../assets/svg/read_svg.vue"
+// import read_svg from "../assets/svg/read_svg.vue"
 import delete_svg from "../assets/svg/busket_svg.vue"
+import ai_svg from "../assets/svg/ai_svg.vue"
+import download_svg from "@/assets/svg/download_svg.vue"
 
 const props = defineProps({
     status: String,
@@ -34,8 +36,11 @@ const props = defineProps({
         </div>
 
         <div class="crud_task">
-            <div class="read_task" v-if="props.status == 'completed'">
-                <read_svg />
+            <div class="original_download" v-if="props.status == 'completed'">
+                <download_svg />
+            </div>
+            <div class="ai_download" v-if="props.status == 'completed'">
+                <ai_svg />
             </div>
 
             <div class="delete_task" v-if="props.status == 'error' || props.status == 'completed'">
@@ -91,7 +96,7 @@ const props = defineProps({
 
 }
 
-.read_task {
+.original_download, .ai_download {
     width: 40px;
     height: 40px;
     border-radius: 10px;
@@ -99,6 +104,10 @@ const props = defineProps({
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.ai_download{
+    background-color: #949edd;
+
 }
 
 .delete_task {

@@ -127,8 +127,8 @@ const tasks = [
 
 .history_task {
     width: 40%;
-    max-height: 70%;
-    height: 70%;
+    max-height: 76%;
+    height: 76%;
     background-color: #28283E;
     border-radius: 10px;
     display: flex;
