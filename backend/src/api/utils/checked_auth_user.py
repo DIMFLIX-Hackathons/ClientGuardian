@@ -6,7 +6,6 @@ from .errors import invalid_token
 
 async def checked_auth_user(request: Request):
     token = request.cookies.get("token")
-    print("DEPENDS   ", token)
 
     if not token:
         raise invalid_token

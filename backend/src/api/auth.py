@@ -26,7 +26,7 @@ async def auth(request: Request, response: Response):
 
 @router.post("/is_authenticated")
 async def is_authenticated(
-    request: Request, response: Response, is_authenticated=Depends(checked_auth_user)
+    response: Response, is_authenticated=Depends(checked_auth_user)
 ):
     if is_authenticated:
         response.status_code = 200
