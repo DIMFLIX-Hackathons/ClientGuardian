@@ -29,17 +29,26 @@ class TokensCRUD:
             return True
 
     async def get_user_files_by_token(self,token):
-        async with self.db_manager.get_sesion() as session:
+        async with self.db_manager.get_session() as session:
             query = select(Task).where(Task.token_id == select(Token.id).where(Token.token == token))
             result = await session.execute(query)
             if result.rowcount > 0:
                 return result.scalars().all()  
             return None
 
+    async def get_token_info_by_token(self, token: str) -> Optional[Token]:
+        async with self.db_manager.get_session() as session:
+            query = select(Token).where(Token.token == token)
+            result = await session.execute(query)
+            return result.scalars().first()
+            
     async def delete_task_by_id(self, task_id):
         async with self.db_manager.get_session() as session:
             query = delete(Task).where(Task.id==task_id)
             result = await session.execute(query)
             await session.commit()
             return result.rowcount > 0
+    
+
+
             

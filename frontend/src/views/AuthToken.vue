@@ -2,6 +2,7 @@
 import { auth } from "@/modules/api";
 import { ref } from "vue";
 import {useRouter} from 'vue-router';
+
 const router = useRouter()
 const token = ref("");
 

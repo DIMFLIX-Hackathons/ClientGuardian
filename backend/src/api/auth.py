@@ -1,11 +1,12 @@
-from fastapi import Response, Request
+from fastapi import Response, Request, APIRouter,Depends
 from loader import crud
 
 from .utils.errors import invalid_token
-from .utils.routers import unprotected_api, protected_api
+from .utils.checked_auth_user import checked_auth_user
 
+router = APIRouter()
 
-@unprotected_api.post("/auth")
+@router.post("/auth")
 async def auth(request: Request, response: Response):
     token = (await request.json()).get("token", None)
     
@@ -22,7 +23,10 @@ async def auth(request: Request, response: Response):
     return response
     
 
-@protected_api.post("/is_authenticated")
-async def is_authenticated(response: Response):
-    response.status_code = 200
-    return response
+@router.post("/is_authenticated")
+async def is_authenticated(request:Request, response: Response, is_authenticated = Depends(checked_auth_user)):
+    if is_authenticated:
+        response.status_code = 200
+        return response
+
+    raise invalid_token

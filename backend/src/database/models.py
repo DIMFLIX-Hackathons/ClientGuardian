@@ -1,4 +1,5 @@
 import enum
+import uuid
 import secrets
 import string
 from datetime import datetime
@@ -52,10 +53,9 @@ class Token(Base):
 
 class Task(Base):
     __tablename__ = "tasks"
-    id = Column(BIGINT, primary_key=True)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     token_id = Column(BIGINT, ForeignKey("tokens.id"), nullable=False)
-    original_path = Column(String, nullable=False)
-    results_path = Column(String, nullable=True)
+    original_filename = Column(String, nullable=False)
     status = Column(Integer, nullable=False, default=0) # 0 - expectation, 1 - completed, 2 - error 
     created_at = Column(TIMESTAMP, nullable=False, default=datetime.now)
 

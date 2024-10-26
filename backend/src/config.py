@@ -9,6 +9,11 @@ project_root: Path = backend_src.parent.parent
 env_path = str(project_root / ".env")
 path_to_alembic_cfg = str(backend_root / "alembic.ini")
 
+path_to_storage = backend_root / "storage"
+path_to_originals = path_to_storage / "originals"
+path_to_processed = path_to_storage / "processed" 
+allowed_extensions = ["csv", "xlsx"]
+
 env = Env()
 env.read_env(env_path)
 

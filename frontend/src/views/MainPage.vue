@@ -13,10 +13,15 @@ const tasks = ref([
   { status: 'error', filename: 'File2.csv', data: '' },
   { status: 'expectation', filename: 'File3.csv', data: '' },
 ]);
+
 function removeTask(index){
     tasks.value.splice(index,1);
     console.log(index)
-    
+}
+
+function createTaskProcess() {
+    createTask()
+    fileStore.clearFiles()
 }
 </script>
 
@@ -29,7 +34,7 @@ function removeTask(index){
             <div class="files_to_server">
                 <FileToServer :file="file.file" :file_id="file.id" v-for="file in fileStore.files" class="file"/>
             </div>
-            <div class="create_task" @click="createTask">
+            <div class="create_task" @click="createTaskProcess">
                 <span onselectstart="return false" onmousedown="return false">Создать задачу</span>
             </div>
         </div>

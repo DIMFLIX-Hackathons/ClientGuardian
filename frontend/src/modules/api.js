@@ -16,7 +16,7 @@ export const createTask = async () => {
     fileStore.files.forEach(file => {formData.append('files', file.file);});
 
     try {
-        const response = await apiClient.post('/create_task', formData, {
+        const response = await apiClient.post('/create_task', formData, {withCredentials: true,
             headers: {'Content-Type': 'multipart/form-data'},
         });
         console.log('Файлы успешно загружены:', response.data);
