@@ -1,10 +1,9 @@
 from datetime import datetime, timedelta
 from typing import Optional
 
+from fastapi import HTTPException, status
 from jose import jwt
 from passlib.context import CryptContext
-from fastapi import HTTPException, status
-
 
 credentials_exc = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,
@@ -14,7 +13,9 @@ credentials_exc = HTTPException(
 
 
 class OAuth2Utils:
-    def __init__(self, jwt_token_secret: str, access_token_exp: int, jwt_algorithm: str = "HS256") -> None:
+    def __init__(
+        self, jwt_token_secret: str, access_token_exp: int, jwt_algorithm: str = "HS256"
+    ) -> None:
         self.jwt_token_secret = jwt_token_secret
         self.access_token_exp = access_token_exp
         self.jwt_algorithm = jwt_algorithm

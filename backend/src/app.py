@@ -1,27 +1,22 @@
 import asyncio
-import traceback
 from argparse import ArgumentParser, RawTextHelpFormatter
 from contextlib import asynccontextmanager
-from database.init_db import init_db
 from typing import AsyncGenerator
 
 import uvicorn
-from loguru import logger
-
 from api import main_router
 from config import cfg
+from database.init_db import init_db
 from loader import app
+from loguru import logger
 from utils.loguru_integration import run_uvicorn_loguru
 
 
 async def on_statup() -> None:
-    logger.success(
-        f"Панель администратора: http://{cfg.api.host}:{cfg.api.port}/admin"
-    )
+    logger.success(f"Панель администратора: http://{cfg.api.host}:{cfg.api.port}/admin")
 
 
-async def on_shutdown() -> None:
-    ...
+async def on_shutdown() -> None: ...
 
 
 @asynccontextmanager
@@ -36,7 +31,7 @@ async def lifespan(_) -> AsyncGenerator:
 
 def start() -> None:
     app.include_router(main_router)
-    
+
     app.router.lifespan_context = lifespan
 
     try:
@@ -62,12 +57,15 @@ def start() -> None:
     # except:
     #     logger.exception(traceback.format_exc())
     #     raise
-    
-    uvicorn.run(app, host=cfg.api.host, port=cfg.api.port, log_level=cfg.logs.level.lower())
+
+    uvicorn.run(
+        app, host=cfg.api.host, port=cfg.api.port, log_level=cfg.logs.level.lower()
+    )
+
 
 if __name__ == "__main__":
     parser = ArgumentParser(formatter_class=RawTextHelpFormatter)
-    parser.add_argument('--init-db', help="Initialize database", action="store_true")
+    parser.add_argument("--init-db", help="Initialize database", action="store_true")
     args = parser.parse_args()
     logger.debug(f"Passed arguments: {args}")
 

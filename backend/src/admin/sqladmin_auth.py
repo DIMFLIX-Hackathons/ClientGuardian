@@ -2,12 +2,17 @@ from loguru import logger
 from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request
 from starlette.responses import RedirectResponse
-
 from utils.oauth2_utils import OAuth2Utils
 
 
 class AdminAuth(AuthenticationBackend):
-    def __init__(self, secret_key: str, oauth2: OAuth2Utils, admin_login: str, admin_password: str) -> None:
+    def __init__(
+        self,
+        secret_key: str,
+        oauth2: OAuth2Utils,
+        admin_login: str,
+        admin_password: str,
+    ) -> None:
         super().__init__(secret_key)
         self.oauth2 = oauth2
         self.admin_login = admin_login

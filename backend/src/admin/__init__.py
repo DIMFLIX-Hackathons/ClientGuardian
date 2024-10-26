@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from sqladmin import Admin
 from sqlalchemy.ext.asyncio import AsyncEngine
-
 from utils.oauth2_utils import OAuth2Utils
+
 from .sqladmin_auth import AdminAuth
 from .sqladmin_views import all_views
 

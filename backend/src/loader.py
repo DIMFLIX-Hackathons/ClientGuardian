@@ -1,13 +1,12 @@
 import sys
 
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from loguru import logger
-
 from admin import create_admin_panel
 from config import cfg
 from database.crud import CommonCRUD
 from database.db_manager import DatabaseManager
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from loguru import logger
 from utils.oauth2_utils import OAuth2Utils
 
 ##==> Database

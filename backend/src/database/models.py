@@ -1,7 +1,7 @@
 import enum
-import uuid
 import secrets
 import string
+import uuid
 from datetime import datetime
 from typing import Any
 
@@ -10,13 +10,10 @@ from sqlalchemy import (
     TIMESTAMP,
     Boolean,
     Column,
-    Enum,
     ForeignKey,
     Integer,
     String,
 )
-from sqlalchemy.dialects.postgresql import ENUM as PgEnum
-from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import relationship
 
 from .db_manager import Base
@@ -56,7 +53,9 @@ class Task(Base):
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     token_id = Column(BIGINT, ForeignKey("tokens.id"), nullable=False)
     original_filename = Column(String, nullable=False)
-    status = Column(Integer, nullable=False, default=0) # 0 - expectation, 1 - completed, 2 - error 
+    status = Column(
+        Integer, nullable=False, default=0
+    )  # 0 - expectation, 1 - completed, 2 - error
     created_at = Column(TIMESTAMP, nullable=False, default=datetime.now)
 
     token = relationship("Token", backref="tasks")

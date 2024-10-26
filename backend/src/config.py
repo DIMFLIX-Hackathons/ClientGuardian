@@ -11,7 +11,7 @@ path_to_alembic_cfg = str(backend_root / "alembic.ini")
 
 path_to_storage = backend_root / "storage"
 path_to_originals = path_to_storage / "originals"
-path_to_processed = path_to_storage / "processed" 
+path_to_processed = path_to_storage / "processed"
 allowed_extensions = ["csv", "xlsx"]
 
 env = Env()

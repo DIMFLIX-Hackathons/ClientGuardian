@@ -14,14 +14,14 @@ class DatabaseManager:
 
     @asynccontextmanager
     async def get_session(self):
-       async with self.AsyncSession() as session:
-           try:
-               yield session
-           except Exception:
-               await session.rollback()
-               raise
-           finally:
-               await session.close()
-            
+        async with self.AsyncSession() as session:
+            try:
+                yield session
+            except Exception:
+                await session.rollback()
+                raise
+            finally:
+                await session.close()
+
 
 Base = declarative_base()

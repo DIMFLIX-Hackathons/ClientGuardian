@@ -4,9 +4,8 @@ import asyncpg
 from alembic.config import Config as AlembicConfig
 from alembic.runtime.environment import EnvironmentContext
 from alembic.script import ScriptDirectory
-from loguru import logger
-
 from config import cfg, path_to_alembic_cfg
+from loguru import logger
 
 
 def init_db() -> None:
