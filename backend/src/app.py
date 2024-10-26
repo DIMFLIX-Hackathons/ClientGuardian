@@ -1,4 +1,5 @@
 import asyncio
+import traceback
 from argparse import ArgumentParser, RawTextHelpFormatter
 from contextlib import asynccontextmanager
 from database.init_db import init_db
@@ -45,18 +46,22 @@ def start() -> None:
     except ImportError:
         logger.info("uvloop не найден. Используется стандартный цикл событий asyncio.")
 
-    try:
-        run_uvicorn_loguru(
-            uvicorn.Config(
-                app,
-                host=cfg.api.host,
-                port=cfg.api.port,
-                log_level=cfg.logs.level.lower(),
-                reload=True,
-            )
-        )
-    except KeyboardInterrupt:
-        ...
+    # try:
+    #     run_uvicorn_loguru(
+    #         uvicorn.Config(
+    #             app,
+    #             host=cfg.api.host,
+    #             port=cfg.api.port,
+    #             log_level=cfg.logs.level.lower(),
+    #             reload=True,
+    #         )
+    #     )
+    # except KeyboardInterrupt:
+    #     ...
+    # except:
+    #     logger.exception(traceback.format_exc())
+    #     raise
+    uvicorn.run(app, host=cfg.api.host, port=cfg.api.port, log_level=cfg.logs.level.lower())
 
 if __name__ == "__main__":
     parser = ArgumentParser(formatter_class=RawTextHelpFormatter)

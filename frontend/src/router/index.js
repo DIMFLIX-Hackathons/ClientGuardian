@@ -25,15 +25,15 @@ export const router = createRouter({
 })
 
 
-// router.beforeEach(async (to, from, next) => {
-// 	if (to.matched.some((record) => record.meta.requiresAuth)) {
-// 	  	const isAuth = await checkToken();
-// 	  	if (!isAuth) {
-//         router.push('/authorization');
-// 	  	}
-// 	}
-// 	next();
-// });
+router.beforeEach(async (to, from, next) => {
+	if (to.matched.some((record) => record.meta.requiresAuth)) {
+	  	const isAuth = await checkToken();
+	  	if (!isAuth) {
+        router.push('/authorization');
+	  	}
+	}
+	next();
+});
 
 export default router;
 

@@ -26,6 +26,7 @@ async def auth(request: Request, response: Response):
     if "token" not in data:
         raise invalid_token
     
+    print(data)
     await check_token(data["token"])    
     response.set_cookie(key="token", value=data["token"], httponly=True)
     response.status_code = 200
@@ -34,8 +35,7 @@ async def auth(request: Request, response: Response):
 
 @router.post("/is_authenticated")
 async def is_authenticated(request: Request, response: Response):
-    token = request.cookies.get(key="token", httponly=True)
-    print(token)
+    token = request.cookies.get("token")
     await check_token(token)
     response.status_code = 200
     return response
