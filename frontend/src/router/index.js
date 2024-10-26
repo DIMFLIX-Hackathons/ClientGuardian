@@ -1,25 +1,39 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AuthToken from '../views/AuthToken.vue'
 import MainPage from '@/views/MainPage.vue'
-const routes = [
+import { checkToken } from '@/modules/api'
 
- 
+
+const routes = [
   {
-    path:'/auth_token',
+    path:'/authorization',
     name:'auth_token',
-    component:AuthToken
+    component:AuthToken,
+    meta: { requiresAuth: false}
   },
   {
     path:'/',
     name:'main',
-    component:MainPage
-
+    component: MainPage,
+    meta: { requiresAuth: true}
   }
 ]
 
-const router = createRouter({
+export const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
 
-export default router
+
+// router.beforeEach(async (to, from, next) => {
+// 	if (to.matched.some((record) => record.meta.requiresAuth)) {
+// 	  	const isAuth = await checkToken();
+// 	  	if (!isAuth) {
+//         router.push('/authorization');
+// 	  	}
+// 	}
+// 	next();
+// });
+
+export default router;
+

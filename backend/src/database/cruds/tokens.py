@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Optional
 
 from sqlalchemy import select, delete
@@ -11,14 +11,20 @@ class TokensCRUD:
     db_manager: DatabaseManager
 
     
-    async def check_token_in_db(self,token):
+    async def check_token(self,token):
             async with self.db_manager.get_session() as session:
                 query = select(Token).where(Token.token==token)
                 result = await session.execute(query)
 
-                if result.rowcount > 0:
-                    return True   
-                return False
+                token_from_db = result.scalars().first()
+                
+                if not token_from_db or not token_from_db.enabled:
+                    return False
+                
+                if datetime.now() > token_from_db.lifetime:
+                    return False
+                
+                return True
     
     async def get_user_files_by_token(self,token):
         async with self.db_manager.get_sesion() as session:

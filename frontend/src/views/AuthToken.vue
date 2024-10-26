@@ -1,5 +1,13 @@
 <script setup>
-// import {check_token} from "@/modules/api";
+import { auth } from "@/modules/api";
+import { ref } from "vue";
+import {useRouter} from 'vue-router';
+const router = useRouter()
+const token = ref("");
+
+async function process_auth() {
+  auth(token.value, router)
+}
 </script>
 
 
@@ -7,12 +15,9 @@
     <div class="container">
        <div class="form">
          <div class="auth_token_inputs">
-           <input type="text" placeholder="Введите токен" />
-          
+           <input type="text" placeholder="Введите токен" v-model="token"/>
          </div>
-         <div class="btn_check_token">
-           <button>Проверить токен</button>
-         </div>
+        <button class="btn_check_token" @click="process_auth">Авторизоваться</button>
        </div>
     </div>
    </template>
@@ -54,7 +59,7 @@
     color: var(--input-text-color);
 }
 
-.btn_check_token button {
+.btn_check_token {
     padding: 10px 20px; 
     background-color: #B4BEFE; 
     color: var(--input-text-color); 
