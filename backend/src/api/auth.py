@@ -1,14 +1,14 @@
-from fastapi import APIRouter, HTTPException, Response, Request
+from fastapi import Response, Request
 from loader import crud
-from typing import Optional
 
-router = APIRouter()
-
-invalid_token = HTTPException(detail='Invalid token', status_code=401)
+from .utils.errors import invalid_token
+from .utils.routers import unprotected_api, protected_api
 
 
-
-async def check_token(token: Optional[str]) -> None:
+@unprotected_api.post("/auth")
+async def auth(request: Request, response: Response):
+    token = (await request.json()).get("token", None)
+    
     if not token:
         raise invalid_token
     
@@ -16,26 +16,13 @@ async def check_token(token: Optional[str]) -> None:
 
     if not checked:
         raise invalid_token
-
-
-
-@router.post("/auth")
-async def auth(request: Request, response: Response):
-    data = await request.json()
-
-    if "token" not in data:
-        raise invalid_token
     
-    print(data)
-    await check_token(data["token"])    
-    response.set_cookie(key="token", value=data["token"], httponly=True)
+    response.set_cookie(key="token", value=token, httponly=True)
     response.status_code = 200
     return response
     
 
-@router.post("/is_authenticated")
-async def is_authenticated(request: Request, response: Response):
-    token = request.cookies.get("token")
-    await check_token(token)
+@protected_api.post("/is_authenticated")
+async def is_authenticated(response: Response):
     response.status_code = 200
     return response

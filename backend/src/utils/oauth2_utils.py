@@ -23,8 +23,8 @@ class OAuth2Utils:
     def pwd_context(self) -> CryptContext:
         return CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-    def check_auth_token(self, token: str) -> dict:
-        decoded = self.decode_token(token)
+    def check_access_token(self, token: str) -> dict:
+        decoded = self.decode_access_token(token)
         try:
             if decoded is not None and "exp" in decoded and "username" in decoded:
                 if datetime.utcnow() < datetime.fromtimestamp(decoded["exp"]):
@@ -34,7 +34,7 @@ class OAuth2Utils:
 
         raise credentials_exc
 
-    def decode_token(self, token: str) -> Optional[dict]:
+    def decode_access_token(self, token: str) -> Optional[dict]:
         try:
             return jwt.decode(
                 token, self.jwt_token_secret, algorithms=self.jwt_algorithm
@@ -51,4 +51,3 @@ class OAuth2Utils:
             to_encode, self.jwt_token_secret, algorithm=self.jwt_algorithm
         )
         return encoded_jwt
-    

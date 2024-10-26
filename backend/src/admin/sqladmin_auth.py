@@ -37,7 +37,7 @@ class AdminAuth(AuthenticationBackend):
             return RedirectResponse(request.url_for("admin:login"), status_code=302)
 
         try:
-            check_auth = self.oauth2.check_auth_token(token)
+            check_auth = self.oauth2.check_access_token(token)
             logger.info(f"Admin authenticated: {check_auth}")
             if "username" in check_auth:
                 if check_auth["username"] == self.admin_login:

@@ -8,7 +8,7 @@ from typing import AsyncGenerator
 import uvicorn
 from loguru import logger
 
-from api import main_router as api_main_router
+from api import unprotected_api, protected_api
 from config import cfg
 from loader import app
 from utils.loguru_integration import run_uvicorn_loguru
@@ -35,7 +35,8 @@ async def lifespan(_) -> AsyncGenerator:
 
 
 def start() -> None:
-    app.include_router(api_main_router)
+    app.include_router(unprotected_api)
+    app.include_router(protected_api)
     app.router.lifespan_context = lifespan
 
     try:
@@ -61,6 +62,7 @@ def start() -> None:
     # except:
     #     logger.exception(traceback.format_exc())
     #     raise
+    
     uvicorn.run(app, host=cfg.api.host, port=cfg.api.port, log_level=cfg.logs.level.lower())
 
 if __name__ == "__main__":
