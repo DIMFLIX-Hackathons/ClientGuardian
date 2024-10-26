@@ -9,11 +9,23 @@ import delete_svg from "../assets/svg/busket_svg.vue"
 import ai_svg from "../assets/svg/ai_svg.vue"
 import download_svg from "@/assets/svg/download_svg.vue"
 
+
+
+
 const props = defineProps({
+  
     status: String,
     filename: String,
     data: String
 })
+const emit = defineEmits([
+    "remove"
+])
+function delete_task(){
+    console.log("удалил")
+    emit("remove");
+    
+}
 </script>
 
 <template>
@@ -43,7 +55,7 @@ const props = defineProps({
                 <ai_svg />
             </div>
 
-            <div class="delete_task" v-if="props.status == 'error' || props.status == 'completed'">
+            <div @click="delete_task" class="delete_task" v-if="props.status == 'error' || props.status == 'completed'">
                 <delete_svg />
             </div>
         </div>

@@ -8,21 +8,16 @@ import { createTask } from '@/modules/api'
 
 const fileStore = useFileStore();
 
-const tasks = [
-    { status: 'completed', filename: 'File1.csv', data: '2024-01-01' },
-    { status: 'error', filename: 'File2.csv', data: '' },
-    { status: 'expectation', filename: 'File3.csv', data: '' },
-    { status: 'completed', filename: 'File1.csv', data: '2024-01-01' },
-    { status: 'error', filename: 'File2.csv', data: '' },
-    { status: 'expectation', filename: 'File3.csv', data: '' },
-    { status: 'completed', filename: 'File1.csv', data: '2024-01-01' },
-    { status: 'error', filename: 'File2.csv', data: '' },
-    { status: 'expectation', filename: 'File3.csv', data: '' },
-    { status: 'completed', filename: 'File1.csv', data: '2024-01-01' },
-    { status: 'error', filename: 'File2.csv', data: '' },
-    { status: 'expectation', filename: 'File3.csv', data: '' },
-];
-
+const tasks = ref([
+  { status: 'completed', filename: 'File1.csv', data: '2024-01-01' },
+  { status: 'error', filename: 'File2.csv', data: '' },
+  { status: 'expectation', filename: 'File3.csv', data: '' },
+]);
+function removeTask(index){
+    tasks.value.splice(index,1);
+    console.log(index)
+    
+}
 </script>
 
 <template>
@@ -49,6 +44,7 @@ const tasks = [
                     :status="task.status" 
                     :filename="task.filename"
                     :data="task.data" 
+                    @remove="removeTask(index)"
                 />
             </div>
         </div>
