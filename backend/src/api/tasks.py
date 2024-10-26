@@ -1,9 +1,11 @@
-from typing import Optional
+import json
+from typing import List, Optional
 
 import aiofiles
 from config import allowed_extensions, path_to_originals
-from database.models import Token
+from database.models import Task, Token
 from fastapi import APIRouter, Depends, File, Request, UploadFile
+from fastapi.responses import JSONResponse
 from loader import crud
 
 from .utils.checked_auth_user import checked_auth_user
@@ -43,3 +45,18 @@ async def create_task(
         ) as buffer:
             content = await file.read()
             await buffer.write(content)
+
+
+@router.post("/get_my_tasks")
+async def get_my_tasks(request: Request, is_authenticated=Depends(checked_auth_user)):
+    if not is_authenticated:
+        raise invalid_token
+
+    token = request.cookies.get("token")
+    token_info: Optional[Token] = await crud.get_token_info_by_token(token)
+
+    if token_info is None:
+        raise invalid_token
+
+    my_tasks: List[Task] = await crud.get_my_tasks(token_info.id)
+    return JSONResponse(json.dumps({"tasks": my_tasks}))

@@ -1,5 +1,6 @@
 from ..db_manager import DatabaseManager
 from ..models import Task
+from typing import List
 
 
 class TasksCRUD:
@@ -11,3 +12,9 @@ class TasksCRUD:
             session.add(task)
             await session.commit()
             return task.id
+
+    async def get_my_tasks(self, token_id: id) -> List[Task]:
+        async with self.db_manager.get_session() as session:
+            query = session.query(Task).filter_by(token_id=token_id)
+            return await query.all()
+        
