@@ -51,7 +51,7 @@ function createTaskProcess() {
                     :key="index" 
                     :task_id="task.id"
                     :status="task.status" 
-                    :filename="task.original_filename"
+                    :filename="task.name"
                     :data="task.created_at" 
                     @remove="removeTask(index)"
                 />
