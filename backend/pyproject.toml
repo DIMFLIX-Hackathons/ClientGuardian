@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "client-guardian"
+version = "0.1.0"
+description = ""
+authors = ["DIMFLIX-OFFICIAL <dimflix.official@gmail.com>"]
+readme = "README.md"
+package-mode = false
+packages = [
+    { include = "backend", from = "src" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.11"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.36"}
+alembic = "^1.13.3"
+asyncpg = "^0.30.0"
+fastapi = "^0.115.3"
+environs = "^11.0.0"
+loguru = "^0.7.2"
+passlib = "^1.7.4"
+uvicorn = "^0.32.0"
+sqladmin = "^0.20.0"
+python-jose = "^3.3.0"
+itsdangerous = "^2.2.0"
+aiofiles = "^24.1.0"
+uuid = "^1.30"
+joblib = "^1.4.2"
+numpy = "^2.1.2"
+matplotlib = "^3.9.2"
+seaborn = "^0.13.2"
+pandas = "^2.2.3"
+scikit-learn = "^1.5.2"
+openpyxl = "^3.1.5"
+xlrd = "^2.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
