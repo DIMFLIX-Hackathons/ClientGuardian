@@ -1,8 +1,8 @@
-"""init
+"""Init
 
-Revision ID: a11fdaee82bf
+Revision ID: 73c90d49faee
 Revises: 
-Create Date: 2024-10-26 17:55:08.801844
+Create Date: 2024-10-27 03:33:11.764223
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'a11fdaee82bf'
+revision: str = '73c90d49faee'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -31,9 +31,9 @@ def upgrade() -> None:
     op.create_table('tasks',
     sa.Column('id', sa.String(length=36), nullable=False),
     sa.Column('token_id', sa.BIGINT(), nullable=False),
-    sa.Column('original_filename', sa.String(), nullable=False),
     sa.Column('status', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.TIMESTAMP(), nullable=False),
+    sa.Column('lifetime', sa.TIMESTAMP(), nullable=False),
     sa.ForeignKeyConstraint(['token_id'], ['tokens.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

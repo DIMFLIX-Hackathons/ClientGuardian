@@ -2,7 +2,7 @@ import enum
 import secrets
 import string
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Any
 
 from sqlalchemy import (
@@ -52,24 +52,10 @@ class Task(Base):
     __tablename__ = "tasks"
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     token_id = Column(BIGINT, ForeignKey("tokens.id"), nullable=False)
-    original_filename = Column(String, nullable=False)
     status = Column(
         Integer, nullable=False, default=0
     )  # 0 - expectation, 1 - completed, 2 - error
     created_at = Column(TIMESTAMP, nullable=False, default=datetime.now)
+    lifetime = Column(TIMESTAMP, nullable=False, default=lambda: datetime.now() + timedelta(days=7))
 
     token = relationship("Token", backref="tasks")
-
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "token_id": self.token_id,
-            "original_filename": self.original_filename,
-            "status": self.status,
-            "created_at": self.created_at  
-        }
-
-    
-
-
-   
